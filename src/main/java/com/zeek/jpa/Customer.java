@@ -1,12 +1,12 @@
 package com.zeek.jpa;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name="JPA_CUSTOMER")
 @Entity
@@ -51,6 +51,15 @@ public class Customer {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	/**
+	 * 工具方法不需要映射数据库的某个字段
+	 * @return
+	 */
+	@Transient
+	public String getInfo(){
+		return "lastName : " + lastName + ", eamil : " +  email ;
 	}
 
 }
