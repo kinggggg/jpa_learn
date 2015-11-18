@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -23,7 +24,13 @@ public class Customer {
 	private Date createTime;
 	private Date birth;
 
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@TableGenerator(name="ID_GENERATOR",
+					pkColumnName="PK_NAME",
+					pkColumnValue="CUSTOMER_ID",
+					valueColumnName="PK_VALUE",
+					table="JPA_ID_GENERATOR",
+					allocationSize=100)
+	@GeneratedValue(strategy=GenerationType.TABLE,generator="ID_GENERATOR")
 	@Id
 	public Integer getId() {
 		return id;
