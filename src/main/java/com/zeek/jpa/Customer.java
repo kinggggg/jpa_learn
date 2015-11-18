@@ -93,4 +93,13 @@ public class Customer {
 		return "lastName : " + lastName + ", eamil : " +  email ;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", email=" + email + ", age=" + age
+				+ ", lastName=" + lastName + ", createTime=" + createTime
+				+ ", birth=" + birth + "]";
+	}
+	
+	
+
 }
