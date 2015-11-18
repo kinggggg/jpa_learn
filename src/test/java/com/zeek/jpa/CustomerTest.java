@@ -13,6 +13,16 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * JPA中的实体的状态和hibernate中实体的状态是相同的（可以查阅下hibernate笔记）
+ * 新建状态:   新创建的对象，尚未拥有持久性主键。
+	持久化状态：已经拥有持久性主键并和持久化建立了上下文环境
+	游离状态：拥有持久化主键，但是没有与持久化建立上下文环境
+	删除状态:  拥有持久化主键，已经和持久化建立上下文环境，但是从数据库中删除。
+
+ * @author weibo_li
+ *
+ */
 public class CustomerTest {
 	
 	private static EntityManagerFactory entityManagerFactory ;
