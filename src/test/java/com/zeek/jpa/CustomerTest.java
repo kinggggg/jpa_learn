@@ -1,5 +1,7 @@
 package com.zeek.jpa;
 
+import java.util.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -20,6 +22,8 @@ public class CustomerTest {
 		c.setAge(23);
 		c.setEmail("test@test.com");
 		c.setLastName("zeek");
+		c.setCreateTime(new Date());
+		c.setBirth(new Date());
 		entityManager.persist(c);
 		transaction.commit();
 		entityManager.close();
