@@ -335,4 +335,12 @@ public class CustomerTest {
 		Customer customer = entityManager.find(Customer.class, 11);
 		entityManager.remove(customer);
 	}
+	
+	@Test
+	public void testUpdate(){
+		Customer customer = entityManager.find(Customer.class, 12);
+		
+		customer.getOrders().iterator().next().setOrderName("O-XXX-10");//在视频中并没有说：不用显示调用entityManager的persist方法，也可以更新相应的Customer的值。
+		   																//想：这和hibernate中的缓存的效果是一样的
+	}
 }
