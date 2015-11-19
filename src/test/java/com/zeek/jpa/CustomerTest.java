@@ -229,4 +229,33 @@ public class CustomerTest {
 		
 		entityManager.refresh(customer);
 	}
+	
+	/**
+	 * 保存多对一时, 建议先保存 1 的一端, 后保存 n 的一端, 这样不会多出额外的 UPDATE 语句.
+	 */
+	@Test
+	public void testManyToOnePersist(){
+		Customer customer = new Customer();
+		customer.setAge(18);
+		customer.setBirth(new Date());
+		customer.setCreateTime(new Date());
+		customer.setEmail("gg@163.com");
+		customer.setLastName("GG");
+		
+		Order order1 = new Order();
+		order1.setOrderName("G-GG-1");
+		
+		Order order2 = new Order();
+		order2.setOrderName("G-GG-2");
+		
+		//设置关联关系
+		order1.setCustomer(customer);
+		order2.setCustomer(customer);
+		
+		//执行保存操作
+		entityManager.persist(order1);
+		entityManager.persist(order2);
+		
+		entityManager.persist(customer);
+	}
 }
