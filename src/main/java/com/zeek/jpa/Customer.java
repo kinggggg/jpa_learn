@@ -1,14 +1,17 @@
 package com.zeek.jpa;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -23,6 +26,8 @@ public class Customer {
 	private String lastName;
 	private Date createTime;
 	private Date birth;
+	
+	private Set<Order> orders = new HashSet<Order>();
 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
@@ -85,6 +90,16 @@ public class Customer {
 	@Transient
 	public String getInfo(){
 		return "lastName : " + lastName + ", eamil : " +  email ;
+	}
+
+	@JoinColumn(name="CUSTOMER_ID")
+	@OneToMany
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
 	}
 
 	@Override

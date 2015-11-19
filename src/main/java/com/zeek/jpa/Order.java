@@ -14,7 +14,7 @@ public class Order {
 	private Integer id;
 	private String orderName;
 
-	private Customer customer;
+//	private Customer customer;
 
 	@GeneratedValue
 	@Id
@@ -34,7 +34,7 @@ public class Order {
 		this.orderName = orderName;
 	}
 
-	@JoinColumn(name="CUSTOMER_ID")//关联外键
+	/*@JoinColumn(name="CUSTOMER_ID")//关联外键
 	@ManyToOne(fetch=FetchType.LAZY)
 	public Customer getCustomer() {
 		return customer;
@@ -42,6 +42,6 @@ public class Order {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
+	}*/
 
 }

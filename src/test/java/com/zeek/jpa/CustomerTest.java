@@ -233,7 +233,7 @@ public class CustomerTest {
 	/**
 	 * 保存多对一时, 建议先保存 1 的一端, 后保存 n 的一端, 这样不会多出额外的 UPDATE 语句.
 	 */
-	@Test
+	/*@Test
 	public void testManyToOnePersist(){
 		Customer customer = new Customer();
 		customer.setAge(18);
@@ -257,32 +257,63 @@ public class CustomerTest {
 		entityManager.persist(order2);
 		
 		entityManager.persist(customer);
-	}
+	}*/
 	
 	//默认情况下, 查询多的一端时，对1的一端采取的是立即加载策略：使用左外连接的方式来获取 n 的一端的对象和其关联的 1 的一端的对象. 
 	//可使用 @ManyToOne 的 fetch 属性来修改默认的关联属性的加载策略
-	@Test
+	/*@Test
 	public void testManyToOneFind(){
 		Order order = entityManager.find(Order.class, 1);
 		System.out.println(order.getOrderName());
 		
 		System.out.println(order.getCustomer().getLastName());
-	}
+	}*/
 	
 	//不能直接删除 1 的一端, 因为有外键约束. 
-	@Test
+	/*@Test
 	public void testManyToOneRemove(){
 //			Order order = entityManager.find(Order.class, 1);
 //			entityManager.remove(order);
 		
 		Customer customer = entityManager.find(Customer.class, 9);
 		entityManager.remove(customer);
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void testManyToOneUpdate(){
 		Order order = entityManager.find(Order.class, 2);
 		order.getCustomer().setLastName("FFF");//在视频中并没有说：不用显示调用entityManager的persist方法，也可以更新相应的Customer的值。
 											   //想：这和hibernate中的缓存的效果是一样的
+	}*/
+	
+	/**
+	 * 单向 1-n 关联关系执行保存时, 一定会多出 UPDATE 语句.
+	 * 需要特别注意：因为 n 的一端在插入时不会同时插入外键列.
+	 */
+	@Test
+	public void testOneToManyPersist(){
+		Customer customer = new Customer();
+		customer.setAge(18);
+		customer.setBirth(new Date());
+		customer.setCreateTime(new Date());
+		customer.setEmail("hh@163.com");
+		customer.setLastName("HH");
+		
+		Order order1 = new Order();
+		order1.setOrderName("H-HH-1");
+		
+		Order order2 = new Order();
+		order2.setOrderName("H-HH-2");
+		
+		//设置关联关系
+		customer.getOrders().add(order1);
+		customer.getOrders().add(order2);
+		
+		//执行保存操作
+		entityManager.persist(customer);
+		
+		entityManager.persist(order1);
+		entityManager.persist(order2);
+		
 	}
 }
