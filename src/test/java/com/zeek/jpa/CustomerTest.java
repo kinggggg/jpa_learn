@@ -268,4 +268,14 @@ public class CustomerTest {
 		
 		System.out.println(order.getCustomer().getLastName());
 	}
+	
+	//不能直接删除 1 的一端, 因为有外键约束. 
+	@Test
+	public void testManyToOneRemove(){
+//			Order order = entityManager.find(Order.class, 1);
+//			entityManager.remove(order);
+		
+		Customer customer = entityManager.find(Customer.class, 9);
+		entityManager.remove(customer);
+	}
 }
