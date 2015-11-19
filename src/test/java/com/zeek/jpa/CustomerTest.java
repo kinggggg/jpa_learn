@@ -186,4 +186,25 @@ public class CustomerTest {
 		
 		System.out.println(customer == customer2); //false
 	}
+	
+	//若传入的是一个游离对象, 即传入的对象有 OID. 
+	//1. 若在 EntityManager 缓存中有对应的对象(貌似和hibernate中的老师的笔记一样：位于一级缓存中的对象一定处于持久化状态（在数据库中有相依的记录）)
+	//2. JPA 会把游离对象的属性复制到查询到EntityManager 缓存中的对象中.
+	//3. EntityManager 缓存中的对象执行 UPDATE. 
+	@Test
+	public void testMerge4(){
+		Customer customer = new Customer();
+		customer.setAge(18);
+		customer.setBirth(new Date());
+		customer.setCreateTime(new Date());
+		customer.setEmail("dd@163.com");
+		customer.setLastName("DD");
+		
+		customer.setId(6);
+		Customer customer2 = entityManager.find(Customer.class, 6);
+		
+		entityManager.merge(customer);
+		
+		System.out.println(customer == customer2); //false
+	}
 }
