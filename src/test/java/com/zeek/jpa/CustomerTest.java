@@ -288,6 +288,12 @@ public class CustomerTest {
 	}*/
 	
 	/**
+	 * 若是双向 1-n 的关联关系, 执行保存时
+	 * 若先保存 n 的一端, 再保存 1 的一端, 默认情况下, 会多出 n*2(这里的n是指，比如说1个Customer有2个订单，将这1个客户和2个订单同时保存，此时这个n的值就是2)条 UPDATE 语句(是相对于最理想的情况来说的，最理想的情况时不用执行update语句).
+	 * 若先保存 1 的一端, 则会多出 n 条 UPDATE 语句(是相对于最理想的情况来说的，最理想的情况时不用执行update语句).
+	 * 在进行双向 1-n 关联关系时, 建议使用 n 的一方来维护关联关系, 而 1 的一方不维护关联系, 这样会有效的减少 SQL 语句. 
+	 * 注意: 若在 1 的一端的 @OneToMany 中使用 mappedBy 属性, 则 @OneToMany 端就不能再使用 @JoinColumn 属性了. 并且此时先保存1的一端还是n的一端都不会出现update语句了，提供了性能
+	 * 
 	 * 单向 1-n 关联关系执行保存时, 一定会多出 UPDATE 语句.
 	 * 需要特别注意：因为 n 的一端在插入时不会同时插入外键列.
 	 */
@@ -297,24 +303,24 @@ public class CustomerTest {
 		customer.setAge(18);
 		customer.setBirth(new Date());
 		customer.setCreateTime(new Date());
-		customer.setEmail("hh@163.com");
-		customer.setLastName("HH");
+		customer.setEmail("ii@163.com");
+		customer.setLastName("II");
 		
 		Order order1 = new Order();
-		order1.setOrderName("H-HH-1");
+		order1.setOrderName("I-II-1");
 		
 		Order order2 = new Order();
-		order2.setOrderName("H-HH-2");
+		order2.setOrderName("I-II-2");
 		
 		//设置关联关系
 		customer.getOrders().add(order1);
 		customer.getOrders().add(order2);
 		
 		//执行保存操作
-		entityManager.persist(customer);
 		
 		entityManager.persist(order1);
 		entityManager.persist(order2);
+		entityManager.persist(customer);
 		
 	}
 	

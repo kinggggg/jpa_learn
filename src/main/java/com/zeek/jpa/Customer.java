@@ -94,8 +94,7 @@ public class Customer {
 		return "lastName : " + lastName + ", eamil : " +  email ;
 	}
 
-	@JoinColumn(name="CUSTOMER_ID")
-	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE})
+	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE}, mappedBy="customer")//mappedBy的值为多的一端定义的1的一端的属性名称
 	public Set<Order> getOrders() {
 		return orders;
 	}
