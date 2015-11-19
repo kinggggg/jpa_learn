@@ -24,13 +24,7 @@ public class Customer {
 	private Date createTime;
 	private Date birth;
 
-	@TableGenerator(name="ID_GENERATOR",
-					pkColumnName="PK_NAME",
-					pkColumnValue="CUSTOMER_ID",
-					valueColumnName="PK_VALUE",
-					table="JPA_ID_GENERATOR",
-					allocationSize=100)
-	@GeneratedValue(strategy=GenerationType.TABLE,generator="ID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
 	public Integer getId() {
 		return id;
