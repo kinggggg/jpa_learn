@@ -258,4 +258,14 @@ public class CustomerTest {
 		
 		entityManager.persist(customer);
 	}
+	
+	//默认情况下, 查询多的一端时，对1的一端采取的是立即加载策略：使用左外连接的方式来获取 n 的一端的对象和其关联的 1 的一端的对象. 
+	//可使用 @ManyToOne 的 fetch 属性来修改默认的关联属性的加载策略
+	@Test
+	public void testManyToOneFind(){
+		Order order = entityManager.find(Order.class, 1);
+		System.out.println(order.getOrderName());
+		
+		System.out.println(order.getCustomer().getLastName());
+	}
 }

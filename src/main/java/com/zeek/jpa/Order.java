@@ -1,6 +1,7 @@
 package com.zeek.jpa;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -34,7 +35,7 @@ public class Order {
 	}
 
 	@JoinColumn(name="CUSTOMER_ID")//关联外键
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	public Customer getCustomer() {
 		return customer;
 	}
