@@ -143,4 +143,26 @@ public class CustomerTest {
 		System.out.println("Customer: " + customer);
 		System.out.println("Customer2: " + customer2);
 	}
+	
+	//若传入的是一个游离对象, 即传入的对象有 OID. 
+	//1. 若在 EntityManager 缓存中没有该对象
+	//2. 若在数据库中也没有对应的记录
+	//3. JPA 会创建一个新的对象, 然后把当前游离对象的属性复制到新创建的对象中
+	//4. 对新创建的对象执行 insert 操作. 
+	@Test
+	public void testMerge2(){
+		Customer customer = new Customer();
+		customer.setAge(18);
+		customer.setBirth(new Date());
+		customer.setCreateTime(new Date());
+		customer.setEmail("dd@163.com");
+		customer.setLastName("DD");
+		
+		customer.setId(2);
+		
+		Customer customer2 = entityManager.merge(customer);
+		
+		System.out.println("customer#id:" + customer.getId());
+		System.out.println("customer2#id:" + customer2.getId());
+	}
 }
