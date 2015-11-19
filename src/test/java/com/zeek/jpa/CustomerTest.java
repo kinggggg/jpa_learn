@@ -158,7 +158,7 @@ public class CustomerTest {
 		customer.setEmail("dd@163.com");
 		customer.setLastName("DD");
 		
-		customer.setId(2);
+		customer.setId(100);
 		
 		Customer customer2 = entityManager.merge(customer);
 		
