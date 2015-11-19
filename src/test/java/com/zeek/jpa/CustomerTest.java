@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.LockModeType;
 import javax.persistence.Persistence;
 
 import org.junit.AfterClass;
@@ -206,5 +207,26 @@ public class CustomerTest {
 		entityManager.merge(customer);
 		
 		System.out.println(customer == customer2); //false
+	}
+	
+	/**
+	 * 同hibernate中的session的flush方法，默认在提交事务的时候，刷新缓存
+	 */
+	@Test
+	public void testFlush(){
+		Customer customer = entityManager.find(Customer.class, 1);
+		customer.setLastName("zhangsan");
+	}
+	
+	/**
+	 * 同hibernate种的session的refresh方法。
+	 * 这里所演示的refresh方法，只是强迫JPA重新向数据库发送查询语句，并且这里演示的是数据库字段信息没有修改的情况。
+	 * 此时出现一个问题：当执行到entityManager.refresh(customer);代码之前，假如说此时id我1的记录被其他的线程修改了，此时如何将被修改的信息refresh到customer中呢？
+	 */
+	@Test
+	public void testRefresh(){
+		Customer customer = entityManager.find(Customer.class, 1);
+		
+		entityManager.refresh(customer);
 	}
 }
