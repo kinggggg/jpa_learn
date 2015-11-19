@@ -2,6 +2,7 @@ package com.zeek.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,7 +40,7 @@ public class Department {
 	//此时采用的是一对一管关联关系的外键关联方式（主键关联方式老师并没有讲）。
 	//若需要在当前数据表中添加主键则需要使用 @JoinColumn 来进行映射. 注意, 1-1 关联关系, 所以需要添加 unique=true
 	@JoinColumn(name="MGR_ID",unique=true)
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	public Manager getMgr() {
 		return mgr;
 	}
