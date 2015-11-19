@@ -165,4 +165,25 @@ public class CustomerTest {
 		System.out.println("customer#id:" + customer.getId());
 		System.out.println("customer2#id:" + customer2.getId());
 	}
+	
+	//若传入的是一个游离对象, 即传入的对象有 OID. 
+	//1. 若在 EntityManager 缓存中没有该对象
+	//2. 若在数据库中也有对应的记录
+	//3. JPA 会查询对应的记录, 然后返回该记录对一个的对象, 再然后会把游离对象的属性复制到查询到的对象中.
+	//4. 对查询到的对象执行 update 操作. 
+	@Test
+	public void testMerge3(){
+		Customer customer = new Customer();
+		customer.setAge(18);
+		customer.setBirth(new Date());
+		customer.setCreateTime(new Date());
+		customer.setEmail("ee@163.com");
+		customer.setLastName("EE");
+		
+		customer.setId(2);
+		
+		Customer customer2 = entityManager.merge(customer);
+		
+		System.out.println(customer == customer2); //false
+	}
 }
