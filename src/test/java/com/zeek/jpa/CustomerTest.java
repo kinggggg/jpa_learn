@@ -349,4 +349,23 @@ public class CustomerTest {
 		customer.getOrders().iterator().next().setOrderName("O-XXX-10");//在视频中并没有说：不用显示调用entityManager的persist方法，也可以更新相应的Customer的值。
 		   																//想：这和hibernate中的缓存的效果是一样的
 	}
+	
+	//双向 1-1 的关联关系, 建议先保存不维护关联关系的一方, 即没有外键的一方, 这样不会多出 UPDATE 语句.
+	@Test
+	public void testOneToOnePersistence(){
+		Manager mgr = new Manager();
+		mgr.setMgrName("M-CC");
+		
+		Department dept = new Department();
+		dept.setDeptName("D-CC");
+		
+		//设置关联关系
+		dept.setMgr(mgr);
+		mgr.setDept(dept);
+		
+		//执行保存操作
+		entityManager.persist(mgr);
+		entityManager.persist(dept);
+		
+	}
 }
