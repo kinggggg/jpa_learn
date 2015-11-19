@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.FetchType;
 import javax.persistence.LockModeType;
 import javax.persistence.Persistence;
 
@@ -315,5 +316,15 @@ public class CustomerTest {
 		entityManager.persist(order1);
 		entityManager.persist(order2);
 		
+	}
+	
+	//默认对关联的多的一方使用懒加载的加载策略. 
+	//可以使用 @OneToMany 的 fetch 属性来修改默认的加载策略（例如如果修改为fetch=FetchType.EAGER，则会采用外连接进行查询）
+	@Test
+	public void testOneToManyFind(){
+		Customer customer = entityManager.find(Customer.class, 10);
+		System.out.println(customer.getLastName());
+		
+		System.out.println(customer.getOrders().size());
 	}
 }
