@@ -121,4 +121,26 @@ public class CustomerTest {
 		entityManager.remove(customer);
 		System.out.println(customer);
 	}
+	
+	/**
+	 * 整体来看JPA的方法类似于hibernate中的saveOrUpdate方法
+	 */
+	/**
+	 * 若传入的是临时对象，JPA会创建一个新的对象，把临时对象的属性复制到新的对象中，然后对新的对象执行持久化操作。所以新的对象中有id
+	 * 但是以前的临时对象没有id
+	 */
+	@Test
+	public void testMerge1(){
+		Customer customer = new Customer();
+		customer.setAge(12);
+		customer.setBirth(new Date());
+		customer.setCreateTime(new Date());
+		customer.setEmail("test@test.com");
+		customer.setLastName("zhangsan");
+		
+		Customer customer2 = entityManager.merge(customer);
+		
+		System.out.println("Customer: " + customer);
+		System.out.println("Customer2: " + customer2);
+	}
 }
