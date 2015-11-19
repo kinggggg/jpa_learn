@@ -327,4 +327,12 @@ public class CustomerTest {
 		
 		System.out.println(customer.getOrders().size());
 	}
+	
+	//默认情况下, 若删除 1 的一端, 则会先把关联的 n 的一端的外键置空, 然后进行删除. 
+	//可以通过 @OneToMany 的 cascade 属性来修改默认的删除策略. 
+	@Test
+	public void testOneToManyRemove(){
+		Customer customer = entityManager.find(Customer.class, 11);
+		entityManager.remove(customer);
+	}
 }
