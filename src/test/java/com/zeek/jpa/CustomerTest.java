@@ -519,4 +519,26 @@ public class CustomerTest {
 		customers = query.getResultList();
 		System.out.println(customers.size());
 	}
+	
+	@Test
+	public void testOrderBy(){
+		String jpql = "FROM Customer c WHERE c.age > ? ORDER BY c.age DESC";
+		Query query = entityManager.createQuery(jpql).setHint(QueryHints.HINT_CACHEABLE, true);
+		
+		//占位符的索引是从 1 开始
+		query.setParameter(1, 1);
+		List<Customer> customers = query.getResultList();
+		System.out.println(customers.size());
+	}
+	
+	//查询 order 数量大于 2 的那些 Customer
+	@Test
+	public void testGroupBy(){
+		String jpql = "SELECT o.customer FROM Order o "
+				+ "GROUP BY o.customer "
+				+ "HAVING count(o.id) >= 2";
+		List<Customer> customers = entityManager.createQuery(jpql).getResultList();
+		
+		System.out.println(customers);
+	}
 }
