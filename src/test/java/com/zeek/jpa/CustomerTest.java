@@ -574,4 +574,13 @@ public class CustomerTest {
 		List<Order> orders = query.getResultList();
 		System.out.println(orders.size());
 	}
+	
+	//使用 jpql 内建的函数
+	@Test
+	public void testJpqlFunction(){
+		String jpql = "SELECT upper(c.email) FROM Customer c";
+		
+		List<String> emails = entityManager.createQuery(jpql).getResultList();
+		System.out.println(emails);
+	}
 }
