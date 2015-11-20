@@ -489,4 +489,14 @@ public class CustomerTest {
 		List resultList = entityManager.createQuery(jpql).setParameter(1, 1).getResultList();
 		System.out.println(resultList);
 	}
+	
+	//createNativeQuery 适用于本地 SQL
+	@Test
+	public void testNativeQuery(){
+		String sql = "SELECT age FROM jpa_customer WHERE id = ?";
+		Query query = entityManager.createNativeQuery(sql).setParameter(1, 3);
+		
+		Object result = query.getSingleResult();
+		System.out.println(result);
+	}
 }
