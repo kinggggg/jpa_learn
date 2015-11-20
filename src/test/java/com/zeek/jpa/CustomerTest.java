@@ -592,4 +592,16 @@ public class CustomerTest {
 		
 		query.executeUpdate();
 	}
+	
+	//可以使用 JPQL 完成 UPDATE 和 DELETE 操作. 
+	@Test
+	public void testExecuteDelete(){
+		String jpql = "DELETE FROM Customer c WHERE c.id = ?";
+		Query query = entityManager.createQuery(jpql).setParameter(1, 1);
+		query.executeUpdate();
+		
+		//通过下面的方式可以级联删除
+		/*Customer find = entityManager.find(Customer.class, 12);
+		entityManager.remove(find);*/
+	}
 }
