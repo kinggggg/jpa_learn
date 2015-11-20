@@ -464,4 +464,15 @@ public class CustomerTest {
 		System.out.println(resultList.size());
 		
 	}
+	
+	/**
+	 * createNamedQuery 适用于在实体类前使用 @NamedQuery 标记的查询语句
+	 */
+	@Test
+	public void testNamedQuery(){
+		Query namedQuery = entityManager.createNamedQuery("testNamedQuery");
+		namedQuery.setParameter(1, 1);
+		Customer customer = (Customer) namedQuery.getSingleResult();
+		System.out.println(customer);
+	}
 }
