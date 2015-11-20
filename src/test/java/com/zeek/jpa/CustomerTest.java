@@ -583,4 +583,13 @@ public class CustomerTest {
 		List<String> emails = entityManager.createQuery(jpql).getResultList();
 		System.out.println(emails);
 	}
+	
+	//可以使用 JPQL 完成 UPDATE 和 DELETE 操作. 
+	@Test
+	public void testExecuteUpdate(){
+		String jpql = "UPDATE Customer c SET c.lastName = ? WHERE c.id = ?";
+		Query query = entityManager.createQuery(jpql).setParameter(1, "YYY").setParameter(2, 12);
+		
+		query.executeUpdate();
+	}
 }
