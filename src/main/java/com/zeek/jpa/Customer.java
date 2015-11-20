@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+@Cacheable(value=true)
 @Table(name="JPA_CUSTOMER")
 @Entity
 public class Customer {
@@ -94,7 +96,7 @@ public class Customer {
 		return "lastName : " + lastName + ", eamil : " +  email ;
 	}
 
-	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE}, mappedBy="customer")//mappedBy的值为多的一端定义的1的一端的属性名称
+	@OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.REMOVE}, mappedBy="customer")//mappedBy的值为多的一端定义的1的一端的属性名称
 	public Set<Order> getOrders() {
 		return orders;
 	}

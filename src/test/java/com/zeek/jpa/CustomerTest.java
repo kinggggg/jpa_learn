@@ -438,4 +438,18 @@ public class CustomerTest {
 		System.out.println(category.getCategoryName());
 		System.out.println(category.getItems().size());
 	}
+	
+	@Test
+	public void testSecondLevelCache(){
+		Customer customer1 = entityManager.find(Customer.class, 1);
+		
+		entityTransaction.commit();
+		entityManager.close();
+		
+		entityManager = entityManagerFactory.createEntityManager();
+		entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		Customer customer2 = entityManager.find(Customer.class, 1);
+	}
 }

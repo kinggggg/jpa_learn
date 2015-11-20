@@ -9,6 +9,7 @@
 	<description>learn jap</description>
 
 	<properties>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<dependencies>
@@ -39,6 +40,14 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+		
+		<!-- hibernate二级缓存 ehcache -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>4.3.10.Final</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
