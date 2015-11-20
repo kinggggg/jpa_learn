@@ -483,7 +483,7 @@ public class CustomerTest {
 	 */
 	@Test
 	public void testPartlyProperties(){
-		//通过这样的jpql语句查询的List结果中的元素类型为Object
+		//通过这样的jpql语句查询的List结果中的元素类型为Object[]
 //		String jpql = "SELECT c.id, c.age from Customer c where id > ?" ;
 		//可以通过如下的jpql语句将查询出的部分属性组装成Customer对象，但是此时Customer中必须有相应的构造函数
 		String jpql = "SELECT new Customer(c.id, c.age) from Customer c where id > ?" ;
@@ -540,5 +540,24 @@ public class CustomerTest {
 		List<Customer> customers = entityManager.createQuery(jpql).getResultList();
 		
 		System.out.println(customers);
+	}
+	
+	/**
+	 * JPQL 的关联查询同 HQL 的关联查询. 
+	 */
+	@Test
+	public void testLeftOuterJoinFetch(){
+		//使用带FETCH关键字的查询可以直接查询出想要的结果：对于这个例子来说就是直接查询出想用的Customer对象，并且此对象中已经包含了相应的Order信息
+		/*String jpql = "FROM Customer c LEFT OUTER JOIN FETCH c.orders WHERE c.id = ?";
+		
+		Customer customer = 
+				(Customer) entityManager.createQuery(jpql).setParameter(1, 12).getSingleResult();
+		System.out.println(customer);
+		System.out.println(customer.getOrders().size());*/
+		
+		//带FETCH关键字的查询查询出的是元素类型为Object[]的list，不方便使用
+		String jpql = "FROM Customer c LEFT OUTER JOIN c.orders WHERE c.id = ?";
+		List<Object[]> result = entityManager.createQuery(jpql).setParameter(1, 12).getResultList();
+		System.out.println(result);
 	}
 }
