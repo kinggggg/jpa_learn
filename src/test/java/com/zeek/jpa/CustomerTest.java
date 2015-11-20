@@ -560,4 +560,18 @@ public class CustomerTest {
 		List<Object[]> result = entityManager.createQuery(jpql).setParameter(1, 12).getResultList();
 		System.out.println(result);
 	}
+	
+	/**
+	 * JPQL中使用子查询
+	 */
+	@Test
+	public void testSubQuery(){
+		//查询所有 Customer 的 lastName 为 YY 的 Order
+		String jpql = "SELECT o FROM Order o "
+				+ "WHERE o.customer = (SELECT c FROM Customer c WHERE c.lastName = ?)";
+		
+		Query query = entityManager.createQuery(jpql).setParameter(1, "HH");
+		List<Order> orders = query.getResultList();
+		System.out.println(orders.size());
+	}
 }
