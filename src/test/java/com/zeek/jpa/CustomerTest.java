@@ -13,6 +13,7 @@ import javax.persistence.LockModeType;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.hibernate.jpa.QueryHints;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -498,5 +499,24 @@ public class CustomerTest {
 		
 		Object result = query.getSingleResult();
 		System.out.println(result);
+	}
+	
+	//使用 hibernate 的查询缓存. 
+	@Test
+	public void testQueryCache(){
+		String jpql = "FROM Customer c WHERE c.age > ?";
+		Query query = entityManager.createQuery(jpql).setHint(QueryHints.HINT_CACHEABLE, true);
+		
+		//占位符的索引是从 1 开始
+		query.setParameter(1, 1);
+		List<Customer> customers = query.getResultList();
+		System.out.println(customers.size());
+		
+		query = entityManager.createQuery(jpql).setHint(QueryHints.HINT_CACHEABLE, true);
+		
+		//占位符的索引是从 1 开始
+		query.setParameter(1, 1);
+		customers = query.getResultList();
+		System.out.println(customers.size());
 	}
 }
