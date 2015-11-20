@@ -2,6 +2,7 @@ package com.zeek.jpa;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.FetchType;
 import javax.persistence.LockModeType;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -451,5 +453,15 @@ public class CustomerTest {
 		entityTransaction.begin();
 		
 		Customer customer2 = entityManager.find(Customer.class, 1);
+	}
+	
+	@Test
+	public void testHelloJPQL(){
+		Query query = entityManager.createQuery("FROM Customer c where c.id > ?");
+		
+		query.setParameter(1, 1);
+		List<Customer> resultList = query.getResultList();
+		System.out.println(resultList.size());
+		
 	}
 }
