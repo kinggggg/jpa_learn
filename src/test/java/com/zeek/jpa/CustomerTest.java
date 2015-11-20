@@ -475,4 +475,18 @@ public class CustomerTest {
 		Customer customer = (Customer) namedQuery.getSingleResult();
 		System.out.println(customer);
 	}
+	
+	/**
+	 * 默认情况下, 若只查询部分属性, 则将返回 Object[] 类型的结果. 或者 Object[] 类型的 List.
+	 * 也可以在实体类中创建对应的构造器, 然后再 JPQL 语句中利用对应的构造器返回实体类的对象.
+	 */
+	@Test
+	public void testPartlyProperties(){
+		//通过这样的jpql语句查询的List结果中的元素类型为Object
+//		String jpql = "SELECT c.id, c.age from Customer c where id > ?" ;
+		//可以通过如下的jpql语句将查询出的部分属性组装成Customer对象，但是此时Customer中必须有相应的构造函数
+		String jpql = "SELECT new Customer(c.id, c.age) from Customer c where id > ?" ;
+		List resultList = entityManager.createQuery(jpql).setParameter(1, 1).getResultList();
+		System.out.println(resultList);
+	}
 }

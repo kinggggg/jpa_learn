@@ -35,6 +35,18 @@ public class Customer {
 	
 	private Set<Order> orders = new HashSet<Order>();
 
+	public Customer() {
+		super();
+	}
+
+	public Customer(Integer id, Integer age) {
+		super();
+		this.id = id;
+		this.age = age;
+	}
+
+
+
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
 	public Integer getId() {
